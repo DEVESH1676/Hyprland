@@ -108,7 +108,8 @@
         "custom/appname": {
             "exec": "~/.config/waybar/scripts/app_name.py",
             "interval": 1,
-            "return-type": "json"
+            "return-type": "json",
+            "on-click": "rofi -show window"
         },
         "group/cpuram": {
             "orientation": "horizontal",

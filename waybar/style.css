@@ -121,20 +121,23 @@ button {
 }
 
 /* media player */
-#mpris {
+#mpris,
+#custom-mpris-marquee {
     margin: 0 0 0 5px;
     padding: 0 8px;
     background-color: transparent;
     color: @text;
 }
 
-#mpris.playing {
+#mpris.playing,
+#custom-mpris-marquee.playing {
     color: @color3;
     font-weight: bold;
 }
 
 /* center module  */
-#window {
+#window,
+#custom-appname {
     padding: 0 5px;
 }
 

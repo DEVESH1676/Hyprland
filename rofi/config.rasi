@@ -7,9 +7,10 @@ configuration {
 	display-window: "Windows";
 	display-run: "Run";
 	drun-display-format: "{icon} {name}";
+	window-format: "{icon} {c} · {t}";
 	font: "JetBrainsMono Nerd Font 10";
 	show-icons: true;
-	icon-theme: "Colloid";
+	icon-theme: "Papirus-Dark";
 }
 
 window {
