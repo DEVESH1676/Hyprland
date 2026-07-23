@@ -7,7 +7,7 @@
             "group/workspaces",
             "tray",
             "custom/cava",
-            "mpris"
+            "custom/mpris-marquee"
         ],
         "modules-center": [
             "group/windows"
@@ -90,33 +90,25 @@
                 "default": "•"
             }
         },
-        "mpris": {
-            "format": "[ 󰠃 {status_icon} | {dynamic} ]",
-            "interval": 1,
-            "dynamic-len": 45,
-            "status-icons": {
-                "playing": "▶",
-                "paused": "⏸",
-                "stopped": ""
-            },
-            "dynamic-order": [
-                "title",
-                "artist"
-            ]
+        "custom/mpris-marquee": {
+            "exec": "~/.config/waybar/scripts/mpris_scroll.py",
+            "return-type": "json",
+            "on-click": "playerctl play-pause",
+            "on-click-right": "playerctl next",
+            "on-click-middle": "playerctl previous"
         },
         "group/windows": {
             "orientation": "horizontal",
             "modules": [
                 "custom/openbracket",
-                "hyprland/window",
+                "custom/appname",
                 "custom/closebracket"
             ]
         },
-        "hyprland/window": {
-            "format": "{title}",
-            "max-length": 40,
-            "min-length": 20,
-            "all-outputs": true
+        "custom/appname": {
+            "exec": "~/.config/waybar/scripts/app_name.py",
+            "interval": 1,
+            "return-type": "json"
         },
         "group/cpuram": {
             "orientation": "horizontal",
