@@ -139,9 +139,19 @@
                 "custom/openbracket",
                 "backlight",
                 "custom/split",
-                "wireplumber",
+                "custom/volume",
                 "custom/closebracket"
             ]
+        },
+        "custom/volume": {
+            "exec": "~/.local/bin/volume-waybar.sh",
+            "return-type": "json",
+            "interval": 2,
+            "signal": 8,
+            "on-click": "~/.local/bin/volume-control.sh mute",
+            "on-scroll-up": "~/.local/bin/volume-control.sh raise",
+            "on-scroll-down": "~/.local/bin/volume-control.sh lower",
+            "on-click-right": "pavucontrol"
         },
         "wireplumber": {
             "scroll-step": 5,

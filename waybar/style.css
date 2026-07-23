@@ -164,7 +164,8 @@ button {
 #idle_inhibitor:hover,
 #custom-swaync:hover,
 #backlight:hover,
-#wireplumber:hover {
+#wireplumber:hover,
+#custom-volume:hover {
     color: @color1;
 }
 
@@ -178,11 +179,13 @@ button {
 
 /* Remaining Modules */
 #backlight,
-#wireplumber {
+#wireplumber,
+#custom-volume {
     padding: 0 8px;
 }
 
-#wireplumber.muted {
+#wireplumber.muted,
+#custom-volume.muted {
     color: @urgent;
     background-color: transparent;
 }

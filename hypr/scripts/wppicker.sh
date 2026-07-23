@@ -3,16 +3,48 @@
 # === CONFIG ===
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 SYMLINK_PATH="$HOME/.config/hypr/current_wallpaper"
+CACHE_FILE="$HOME/.cache/current_wallpaper"
 HYPRLOCK_CONFIG="$HOME/.config/hypr/hyprlock.conf"
 
 cd "$WALLPAPER_DIR" || exit 1
 
-# === handle spaces in names ===
-IFS=$'\n'
+# Collect all wallpapers sorted naturally
+mapfile -t WALLPAPERS < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) | sort -V)
 
-# === ICON-PREVIEW SELECTION WITH ROFI, SORTED BY NEWEST ===
-SELECTED_WALL=$(for a in $(ls -t *.jpg *.png *.gif *.jpeg 2>/dev/null); do echo -en "$a\0icon\x1f$a\n"; done | rofi -dmenu -p "")
-[ -z "$SELECTED_WALL" ] && exit 1
+if [ ${#WALLPAPERS[@]} -eq 0 ]; then
+  notify-send "Wallpaper" "No wallpapers found in $WALLPAPER_DIR"
+  exit 1
+fi
+
+# Detect current active wallpaper
+CURRENT_NAME=""
+if [ -L "$SYMLINK_PATH" ]; then
+  CURRENT_NAME=$(basename "$(readlink -f "$SYMLINK_PATH")")
+elif [ -f "$CACHE_FILE" ]; then
+  CURRENT_NAME=$(basename "$(cat "$CACHE_FILE")")
+fi
+
+# Determine 0-indexed row for rofi -selected-row
+SELECTED_ROW=0
+for i in "${!WALLPAPERS[@]}"; do
+  fname=$(basename "${WALLPAPERS[$i]}")
+  if [ "$fname" = "$CURRENT_NAME" ]; then
+    SELECTED_ROW=$i
+    break
+  fi
+done
+
+# Build Rofi input string with icon preview
+ROFI_INPUT=""
+for wp in "${WALLPAPERS[@]}"; do
+  fname=$(basename "$wp")
+  ROFI_INPUT+="${fname}\0icon\x1f${wp}\n"
+done
+
+# Launch Rofi with -selected-row pointing to current wallpaper
+SELECTED_WALL=$(echo -en "$ROFI_INPUT" | rofi -dmenu -p "Wallpaper" -i -selected-row "$SELECTED_ROW")
+[ -z "$SELECTED_WALL" ] && exit 0
+
 SELECTED_PATH="$WALLPAPER_DIR/$SELECTED_WALL"
 
 # === SET WALLPAPER WITH SMOOTH TRANSITION ===
@@ -53,8 +85,9 @@ if [ -f "$HYPRLOCK_CONFIG" ]; then
   sed -i "/background {/,/}/{s|path = .*|path = $SELECTED_PATH|}" "$HYPRLOCK_CONFIG"
 fi
 
-# === CREATE SYMLINK ===
+# === CREATE SYMLINK & SAVE CACHE ===
 mkdir -p "$(dirname "$SYMLINK_PATH")"
 ln -sf "$SELECTED_PATH" "$SYMLINK_PATH"
+echo "$SELECTED_PATH" > "$CACHE_FILE"
 
 notify-send "Wallpaper" "Applied: $SELECTED_WALL"

@@ -43,7 +43,7 @@ mainbox {
 imagebox {
     padding:                     20px;
     background-color:            transparent;
-    background-image:            url("/home/devesh/Pictures/wallpapers/023.jpg", height);
+    background-image:            url("~/.config/hypr/current_wallpaper", height);
     orientation:                 vertical;
     children:                    [ "inputbar", "dummy", "mode-switcher" ];
 }
