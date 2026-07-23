@@ -3,9 +3,11 @@
 # Theme Switcher Script
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 CURRENT_WALLPAPER_FILE="$HOME/.cache/current_wallpaper"
+SYMLINK_PATH="$HOME/.config/hypr/current_wallpaper"
+HYPRLOCK_CONFIG="$HOME/.config/hypr/hyprlock.conf"
 
 # Collect wallpapers
-mapfile -t WALLPAPERS < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | sort)
+mapfile -t WALLPAPERS < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) | sort -V)
 
 if [ ${#WALLPAPERS[@]} -eq 0 ]; then
   notify-send "Theme Switcher" "No wallpapers found in $WALLPAPER_DIR"
@@ -14,7 +16,27 @@ fi
 
 # Helpers
 get_current_index() {
-  [[ -f "$CURRENT_WALLPAPER_FILE" ]] && cat "$CURRENT_WALLPAPER_FILE" || echo "0"
+  if [ -L "$SYMLINK_PATH" ]; then
+    local current_real
+    current_real=$(readlink -f "$SYMLINK_PATH")
+    for i in "${!WALLPAPERS[@]}"; do
+      if [ "${WALLPAPERS[$i]}" = "$current_real" ]; then
+        echo "$i"
+        return
+      fi
+    done
+  fi
+  if [ -f "$CURRENT_WALLPAPER_FILE" ]; then
+    local cached_path
+    cached_path=$(cat "$CURRENT_WALLPAPER_FILE")
+    for i in "${!WALLPAPERS[@]}"; do
+      if [ "${WALLPAPERS[$i]}" = "$cached_path" ]; then
+        echo "$i"
+        return
+      fi
+    done
+  fi
+  echo "0"
 }
 
 apply_theme() {
@@ -23,7 +45,9 @@ apply_theme() {
   local wallpaper_name
   wallpaper_name=$(basename "$wallpaper_path")
 
-  echo "$index" >"$CURRENT_WALLPAPER_FILE"
+  echo "$wallpaper_path" >"$CURRENT_WALLPAPER_FILE"
+  mkdir -p "$(dirname "$SYMLINK_PATH")"
+  ln -sf "$wallpaper_path" "$SYMLINK_PATH"
 
   # Generate random float between 0.0 and 1.0 for X and Y
   local rand_x=$(awk -v r=$RANDOM 'BEGIN{srand(r); print rand()}')
@@ -72,11 +96,9 @@ apply_theme() {
 
 update_hyprlock_wallpaper() {
   local wallpaper_path="$1"
-  local hyprlock_config="$HOME/.config/hypr/hyprlock.conf"
-
-  [[ ! -f "${hyprlock_config}.backup" ]] && cp "$hyprlock_config" "${hyprlock_config}.backup"
-
-  sed -i "/background {/,/}/{s|path = .*|path = $wallpaper_path|}" "$hyprlock_config"
+  if [ -f "$HYPRLOCK_CONFIG" ]; then
+    sed -i "/background {/,/}/{s|path = .*|path = $wallpaper_path|}" "$HYPRLOCK_CONFIG"
+  fi
 }
 
 restore_theme() {
@@ -87,7 +109,8 @@ restore_theme() {
 # Main
 case "${1:-next}" in
 "next")
-  next_index=$((($(get_current_index) + 1) % ${#WALLPAPERS[@]}))
+  curr=$(get_current_index)
+  next_index=$(((curr + 1) % ${#WALLPAPERS[@]}))
   apply_theme "${WALLPAPERS[$next_index]}" "$next_index"
   ;;
 "random")
@@ -98,8 +121,8 @@ case "${1:-next}" in
   restore_theme
   ;;
 "list")
-  # Show only filenames in wofi
-  selected=$(printf "%s\n" "${WALLPAPERS[@]##*/}" | rofi -dmenu -p "Choose Wallpaper" -i)
+  curr_idx=$(get_current_index)
+  selected=$(printf "%s\n" "${WALLPAPERS[@]##*/}" | rofi -dmenu -p "Choose Wallpaper" -i -selected-row "$curr_idx")
 
   if [ -n "$selected" ]; then
     for i in "${!WALLPAPERS[@]}"; do
