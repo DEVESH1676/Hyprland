@@ -1,0 +1,321 @@
+[
+    {
+        "height": 40,
+        "spacing": 5,
+        "modules-left": [
+            "group/Utilities",
+            "group/workspaces",
+            "tray",
+            "custom/cava",
+            "mpris"
+        ],
+        "modules-center": [
+            "group/windows"
+        ],
+        "modules-right": [
+            "group/cpuram",
+            "group/brightvol",
+            "group/system"
+        ],
+        "custom/openbracket": {
+            "format": "[",
+            "tooltip": false
+        },
+        "custom/closebracket": {
+            "format": "]",
+            "tooltip": false
+        },
+        "custom/split": {
+            "format": "|",
+            "tooltip": false
+        },
+        "group/Utilities": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "custom/arch",
+                "custom/closebracket"
+            ]
+        },
+        "custom/arch": {
+            "format": "󰣇",
+            "tooltip": false,
+            "on-click": "rofi -show drun"
+        },
+        "custom/powerprofile": {
+            "exec": "~/.config/waybar/scripts/powerprofile.sh display",
+            "on-click": "~/.config/waybar/scripts/powerprofile.sh toggle",
+            "interval": 5,
+            "tooltip": true,
+            "exec-tooltip": "~/.config/waybar/scripts/powerprofile.sh tooltip",
+            "tooltip-format": "Power Profile: {} \nClick to cycle: Efficient → Normal → Overclocked"
+        },
+        "custom/themeswitcher": {
+            "format": "",
+            "tooltip": true,
+            "tooltip-format": "Click to change theme",
+            "on-click": "~/.config/waybar/scripts/theme-switch.sh next",
+            "on-click-right": "~/.config/waybar/scripts/theme-switch.sh random"
+        },
+        "group/workspaces": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "hyprland/workspaces",
+                "custom/closebracket"
+            ]
+        },
+        "hyprland/workspaces": {
+            "all-outputs": true,
+            "warp-on-scroll": false,
+            "enable-bar-scroll": true,
+            "disable-scroll-wraparound": true,
+            "active-only": false,
+            "persistent-workspaces": {
+                "*": [
+                    1,
+                    2,
+                    3,
+                    4
+                ]
+            },
+            "format": "{icon}",
+            "format-icons": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "default": "•"
+            }
+        },
+        "mpris": {
+            "format": "[ 󰠃 {status_icon} | {dynamic} ]",
+            "interval": 1,
+            "dynamic-len": 45,
+            "status-icons": {
+                "playing": "▶",
+                "paused": "⏸",
+                "stopped": ""
+            },
+            "dynamic-order": [
+                "title",
+                "artist"
+            ]
+        },
+        "group/windows": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "hyprland/window",
+                "custom/closebracket"
+            ]
+        },
+        "hyprland/window": {
+            "format": "{title}",
+            "max-length": 40,
+            "min-length": 20,
+            "all-outputs": true
+        },
+        "group/cpuram": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "cpu",
+                "custom/split",
+                "memory",
+                "custom/closebracket"
+            ]
+        },
+        "cpu": {
+            "format": "CPU:{usage}%",
+            "tooltip": false,
+            "interval": 2,
+            "on-click": "kitty -e htop",
+        },
+        "memory": {
+            "format": "RAM:{}%",
+            "tooltip": false,
+            "interval": 2,
+            "on-click": "kitty -e htop",
+        },
+        "group/brightvol": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "backlight",
+                "custom/split",
+                "wireplumber",
+                "custom/closebracket"
+            ]
+        },
+        "wireplumber": {
+            "scroll-step": 5,
+            "format": "{icon}{volume}%",
+            "format-bluetooth": "{icon}{volume}% ",
+            "format-bluetooth-muted": " {icon}",
+            "format-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": [
+                    " :",
+                    " :",
+                    " :"
+                ]
+            },
+            "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+            "on-click-right": "pavucontrol"
+        },
+        "backlight": {
+            "device": "nvidia_wmi_ec_backlight", // Replaced intel_backlight with correct device
+            "format": "{icon} :{percent}%",
+            "format-icons": [
+                "",
+                "󰽣",
+                ""
+            ]
+        },
+        "group/system": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "clock",
+                "custom/split",
+                "idle_inhibitor",
+                "network",
+                "custom/bluetooth",
+                "custom/clipboard",
+                "battery",
+                "custom/swaync",
+                "custom/closebracket"
+            ]
+        },
+        "clock": {
+            "format": "{:%I:%M %p}", // Added %p for AM/PM to clarify time
+            "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>", // Removed <small> for better readability
+            "calendar": {
+                "mode": "month", // Default to month view
+                "mode-mon-col": 3, // 3 columns for year view if toggled
+                "weeks-pos": "right", // Week numbers on the right
+                "on-scroll": 1, // Enable scrolling to navigate months
+                "on-click-right": "mode", // Right-click to toggle between month/year
+                "format": {
+                    "months": "<span color='#ffffff'><b>{}</b></span>", // White, bold months
+                    "days": "<span color='#cccccc'>{}</span>", // Light gray days
+                    "weeks": "<span color='#99cc99'>W{}</span>", // Green week numbers
+                    "weekdays": "<span color='#ffcc66'><b>{}</b></span>", // Yellow weekdays
+                    "today": "<span color='#ff5555'><b><u>{}</u></b></span>" // Red, underlined today
+                }
+            },
+            "actions": {
+                "on-click-right": "mode", // Toggle month/year view
+                "on-scroll-up": "shift_up", // Scroll up to previous month
+                "on-scroll-down": "shift_down" // Scroll down to next month
+            },
+            "on-click": "yad --calendar --undecorated --fixed --close-on-unfocus" // Replace "kalender" with a working command
+        },
+        "custom/clipboard": {
+            "format": "",
+            "tooltip": false,
+            "on-click": "~/.config/waybar/scripts/clipboard_menu.sh"
+        },
+        "battery": {
+            "bat": "BAT0",
+            "adapter": "ADP1",
+            "interval": 2,
+            "states": {
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{icon} {capacity}%",
+            "format-full": "{icon} {capacity}%",
+            "format-charging": " {capacity}%",
+            "format-plugged": "󰂄{capacity}%",
+            "format-icons": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "on-click": "wlogout"
+        },
+        "idle_inhibitor": {
+            "format": "{icon}",
+            "format-icons": {
+                "activated": "",
+                "deactivated": ""
+            }
+        },
+        "custom/swaync": {
+            "tooltip": true,
+            "format": "{icon}",
+            "format-icons": {
+                "notification": "<span foreground='red'><sup></sup></span>",
+                "none": "",
+                "dnd-notification": "<span foreground='red'><sup></sup></span>",
+                "dnd-none": "",
+                "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+                "inhibited-none": "",
+                "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+                "dnd-inhibited-none": ""
+            },
+            "return-type": "json",
+            "exec-if": "which swaync-client",
+            "exec": "swaync-client -swb",
+            "on-click": "swaync-client -t -sw",
+            "on-click-right": "swaync-client -d -sw",
+            "escape": true
+        },
+        "network": {
+            "format-wifi": "{icon}",
+            "format-ethernet": "󰈀 LAN",
+            "format-disconnected": "󰖪",
+            "tooltip-format": "{ipaddr}\n{essid} ({signalStrength}%)",
+            "on-click": "~/.config/waybar/scripts/rofi-wifi-menu.sh",
+            "format-icons": [
+                "󰤯",
+                "󰤟",
+                "󰤢",
+                "󰤥",
+                "󰤨"
+            ]
+        },
+        "custom/bluetooth": {
+            "format": "{}",
+            "exec": "~/.config/waybar/scripts/bluetooth_status.sh",
+            "interval": 5,
+            "on-click": "blueman-manager",
+            "tooltip": true
+        },
+        "group/clock": {
+            "orientation": "horizontal",
+            "modules": [
+                "custom/openbracket",
+                "clock",
+                "custom/closebracket"
+            ]
+        },
+        "custom/cava": {
+            "exec": "~/.config/cava/cava_waybar.sh",
+            "format": "{}",
+            "restart-interval": 1,
+            "on-click": "pkill -f cava_waybar.sh || true"
+        },
+        "tray": {
+            "icon-size": 14,
+            "spacing": 10
+        },
+        "custom/notifications": {
+            "format": "",
+            "tooltip": false,
+            "on-click": "~/.config/waybar/scripts/notification_center.sh"
+        }
+    }
+]

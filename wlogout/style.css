@@ -1,0 +1,82 @@
+* {
+    font-size: 18px;
+    font-family: "JetBrains Mono", "Iosevka Nerd Font", monospace;
+}
+
+window {
+    background-color: rgba(17, 17, 17, 0.65);
+}
+
+button {
+    border-radius: 20px;
+    margin: 10px;
+    color: #DDD5C4;
+    border-color: #A0907A;
+    background-color: rgba(0, 0, 0, 0.6);
+    outline-style: none;
+    border-style: solid;
+    border-width: 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    box-shadow: none;
+    text-shadow: none;
+    transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682);
+}
+
+button:focus {
+    outline-style: none;
+    box-shadow: none;
+}
+
+button:hover {
+    background-color: rgba(210, 139, 87, 0.8);
+    background-size: 35%;
+    border-width: 2px;
+}
+
+button span {
+    font-size: 1.1em;
+}
+
+#lock {
+    background-image: url("icons/lock.png");
+}
+#lock:hover {
+    background-image: url("icons/lock-hover.png");
+}
+
+#logout {
+    background-image: url("icons/logout.png");
+}
+#logout:hover {
+    background-image: url("icons/logout-hover.png");
+}
+
+#suspend {
+    background-image: url("icons/sleep.png");
+}
+#suspend:hover {
+    background-image: url("icons/sleep-hover.png");
+}
+
+#shutdown {
+    background-image: url("icons/power.png");
+}
+#shutdown:hover {
+    background-image: url("icons/power-hover.png");
+}
+
+#reboot {
+    background-image: url("icons/restart.png");
+}
+#reboot:hover {
+    background-image: url("icons/restart-hover.png");
+}
+
+#hibernate {
+    background-image: url("icons/hibernate.png");
+}
+#hibernate:hover {
+    background-image: url("icons/hibernate-hover.png");
+}

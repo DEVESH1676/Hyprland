@@ -1,0 +1,86 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-layer": "overlay",
+  "control-center-width": 500,
+  "control-center-height": 500,
+  "widgets": [
+    "buttons-grid",
+    "mpris",
+    "volume",
+    "backlight",
+    "dnd",
+    "title",
+    "notifications"
+  ],
+  "scripts": {
+    "spotify-art-fix": {
+      "exec": "bash ~/.config/swaync/fix_spotify_art.sh",
+      "app-name": "Spotify",
+      "summary": ".*",
+      "body": ".*",
+      "run-on": "receive"
+    }
+  },
+  "widget-config": {
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "⏻",
+          "command": "systemctl poweroff"
+        },
+        {
+          "label": "󰷛",
+          "command": "hyprlock"
+        },
+        {
+          "label": "󰍃",
+          "command": "hyprctl dispatch exit"
+        },
+        {
+          "label": "󰝟",
+          "type": "toggle",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && pactl set-sink-mute @DEFAULT_SINK@ 0 || pactl set-sink-mute @DEFAULT_SINK@ 1'",
+          "update-command": "sh -c '[[ $(pactl get-sink-mute @DEFAULT_SINK@) == \"Mute: no\" ]] && echo true || echo false'"
+        },
+        {
+          "label": "󰂯",
+          "type": "toggle",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off'",
+          "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
+        },
+        {
+          "label": "WiFi",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+        }
+      ]
+    },
+    "mpris": {
+      "label": "Media",
+      "show-art": true,
+      "show-title": true,
+      "show-artist": true,
+      "image-size": 128,
+      "image-radius": 8
+    },
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "volume": {
+      "label": "Volume"
+    },
+    "backlight": {
+      "label": "Brightness"
+    }
+  }
+}

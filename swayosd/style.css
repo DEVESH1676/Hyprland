@@ -1,0 +1,73 @@
+@define-color focused #a53cab;
+
+/* Main OSD window */
+window {
+    background: #2c2A24;
+    /* Semi-transparent dark background */
+    border-radius: 1px;
+    /* Rounded corners */
+    padding: 5px;
+    /* Inner padding */
+    margin: 20px;
+    /* Margin from screen edges */
+}
+
+/* Progress bar container */
+.progress-bar {
+    background: #444444;
+    /* Background of the progress bar */
+    border-radius: 2px;
+    /* Rounded progress bar */
+    min-height: 12px;
+    /* Height of the bar */
+}
+
+/* Progress bar fill */
+.progress-bar progress {
+    color: #a89984;
+    /* Blue fill for progress */
+    border-radius: 6px;
+}
+
+/* Icon styling */
+image {
+    -gtk-icon-size: 20px;
+    /* Size of icons (e.g., volume, brightness) */
+    margin-right: 8px;
+    /* Space between icon and progress bar */
+    color: #a89984;
+    /* White icon color */
+}
+
+/* Text styling (e.g., percentage or status) */
+label {
+    font-family: "Sans", sans-serif;
+    /* Font family */
+    font-size: 14px;
+    /* Font size */
+    font-weight: bold;
+    /* Bold text */
+    color: #ffffff;
+    /* White text color */
+}
+
+/* Specific OSD types */
+#volume {
+    background: #2c2A24;
+    /* Volume OSD background */
+}
+
+#brightness {
+    background: #2c2A24;
+    /* Slightly different for brightness */
+}
+
+#caps-lock {
+    background: #2c2A24;
+    /* Reddish for Caps Lock */
+}
+
+#num-lock {
+    background: #2c2A24;
+    /* Greenish for Num Lock */
+}

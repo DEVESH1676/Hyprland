@@ -1,0 +1,6 @@
+[config]
+image = "/home/devesh/Pictures/wallpapers/023.jpg"
+
+[templates.kitty]
+input_path = "templates/kitty-colors.conf"
+output_path = "~/.config/kitty/matugen-colors.conf"
