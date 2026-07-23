@@ -45,36 +45,31 @@ fi
 # Unicode block characters for equalizer height (baseline level 0 uses ▂ to avoid empty space gaps)
 dict=("▂" "▂" "▃" "▄" "▅" "▆" "▇" "█")
 
+# Exit cleanly on SIGPIPE (when Waybar closes stdout pipe)
+trap 'exit 0' SIGPIPE
+
 # Process raw cava output and render unicode equalizer bars
-cava -p "$config_file" | while read -r line; do
+cava -p "$config_file" 2>/dev/null | while read -r line; do
     player_status=$(playerctl status 2>/dev/null || echo "NoPlayer")
 
     # If music player is paused, show only the music icon ♪
     if [ "$player_status" = "Paused" ]; then
-        echo "♪"
+        echo "♪" 2>/dev/null || exit 0
         continue
     # If no media player is open or stopped, hide widget
     elif [ "$player_status" = "NoPlayer" ] || [ "$player_status" = "Stopped" ]; then
-        echo ""
+        echo "" 2>/dev/null || exit 0
         continue
     fi
 
     output=""
-    is_active=0
     IFS=';' read -ra ADDR <<< "$line"
     for val in "${ADDR[@]}"; do
         if [[ "$val" =~ ^[0-7]$ ]]; then
             output+="${dict[$val]}"
-            if [ "$val" -gt 0 ]; then
-                is_active=1
-            fi
         fi
     done
 
-    # If audio is playing, show live dynamic equalizer bars; otherwise show music icon ♪
-    if [ "$is_active" -eq 1 ]; then
-        echo "♪ $output"
-    else
-        echo "♪"
-    fi
+    # While playing, keep equalizer bars rendering smoothly (rests at baseline ▂ during quiet parts)
+    echo "♪ $output" 2>/dev/null || exit 0
 done

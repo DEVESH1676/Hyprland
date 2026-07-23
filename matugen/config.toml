@@ -1,6 +1,22 @@
 [config]
-image = "/home/devesh/Pictures/wallpapers/023.jpg"
+mode = "dark"
 
 [templates.kitty]
 input_path = "templates/kitty-colors.conf"
 output_path = "~/.config/kitty/matugen-colors.conf"
+
+[templates.hyprland]
+input_path = "templates/hypr-colors.conf"
+output_path = "~/.config/hypr/colors.conf"
+
+[templates.gtk3]
+input_path = "templates/gtk-colors.css"
+output_path = "~/.config/gtk-3.0/gtk.css"
+
+[templates.gtk4]
+input_path = "templates/gtk-colors.css"
+output_path = "~/.config/gtk-4.0/colors.css"
+
+[templates.rofi]
+input_path = "templates/rofi-colors.rasi"
+output_path = "~/.config/rofi/colors.rasi"
