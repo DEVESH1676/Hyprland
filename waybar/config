@@ -1,6 +1,6 @@
 [
     {
-        "height": 40,
+        "height": 32,
         "spacing": 5,
         "modules-left": [
             "group/Utilities",
@@ -123,15 +123,21 @@
         },
         "cpu": {
             "format": "CPU:{usage}%",
+            "states": {
+                "critical": 85
+            },
             "tooltip": false,
             "interval": 2,
-            "on-click": "kitty -e htop",
+            "on-click": "kitty -e htop"
         },
         "memory": {
             "format": "RAM:{}%",
+            "states": {
+                "critical": 90
+            },
             "tooltip": false,
             "interval": 2,
-            "on-click": "kitty -e htop",
+            "on-click": "kitty -e htop"
         },
         "group/brightvol": {
             "orientation": "horizontal",
@@ -233,14 +239,16 @@
             "bat": "BAT0",
             "adapter": "ADP1",
             "interval": 2,
+            "tooltip": true,
             "states": {
                 "warning": 30,
                 "critical": 15
             },
             "format": "{icon} {capacity}%",
             "format-full": "{icon} {capacity}%",
-            "format-charging": " {capacity}%",
-            "format-plugged": "󰂄{capacity}%",
+            "format-charging": "󰂄 {capacity}%",
+            "format-plugged": "󰚥 {capacity}%",
+            "format-notcharging": "󰚥 {capacity}%",
             "format-icons": [
                 "",
                 "",

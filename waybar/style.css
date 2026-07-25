@@ -44,25 +44,28 @@ window#waybar.empty #window {
 
 /* configuring the modules */
 .modules-left {
-    margin: 4px 0 0 6px;
-    padding: 2px 8px 2px 8px;
-    background-color: @background;
+    margin: 3px 0 0 5px;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
     border: 2px solid @focused3;
     border-radius: 8px;
 }
 
 .modules-center {
-    margin: 4px 0 0 0;
-    padding: 2px 12px 2px 12px;
-    background-color: @background;
+    margin: 3px 0 0 0;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
     border: 2px solid @focused3;
     border-radius: 8px;
 }
 
 .modules-right {
-    margin: 4px 6px 0 0;
-    padding: 2px 10px 2px 10px;
-    background-color: @background;
+    margin: 3px 5px 0 0;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
     border: 2px solid @focused3;
     border-radius: 8px;
 }
@@ -77,11 +80,17 @@ button {
 /* left island */
 
 /* menu pannel */
-#custom-arch,
+#custom-arch {
+    padding: 0 8px 0 4px;
+    font-size: 18px;
+    border-radius: 8px;
+    margin-top: 2px;
+    transition: all 0.25s ease-in-out;
+}
+
 #custom-powerprofile,
 #custom-themeswitcher {
-    padding-right: 10px;
-    padding-left: 5px;
+    padding: 0 6px;
     font-size: 15px;
     border-radius: 8px;
 }
@@ -100,8 +109,9 @@ button {
 
 /* workspace pannel */
 #workspaces button {
-    padding: 0 6px;
-    margin: 0 1px;
+    padding: 0 4px;
+    margin: 4px 2px;
+    min-height: 20px;
     background-color: transparent;
     color: @text;
     border-radius: 4px;
@@ -135,12 +145,16 @@ button {
     color: @text;
 }
 
-#mpris.playing,
-#custom-mpris-marquee.playing {
-    color: @color3;
-    font-weight: bold;
+#custom-mpris-marquee.stopped {
+    padding: 0;
+    margin: 0;
 }
 
+#mpris.playing,
+#custom-mpris-marquee.playing {
+    font-weight: bold;
+    color: @color3;
+}
 /* center module  */
 #window,
 #custom-appname {
@@ -162,7 +176,6 @@ button {
 #backlight,
 #wireplumber,
 #custom-volume,
-#custom-arch,
 #custom-powerprofile,
 #custom-themeswitcher {
     padding: 0 8px;
@@ -180,7 +193,6 @@ button {
 #backlight:hover,
 #wireplumber:hover,
 #custom-volume:hover,
-#custom-arch:hover,
 #custom-powerprofile:hover,
 #custom-themeswitcher:hover {
     color: @color4;
@@ -218,20 +230,28 @@ button {
     background-color: transparent;
 }
 
-#battery.critical:not(.charging) {
+#battery.critical:not(.charging),
+#cpu.critical,
+#memory.critical {
     color: @urgent;
     background-color: transparent;
-    animation: pulse-glow 1s ease-in-out infinite alternate;
+    animation: aura-alert 1s ease-in-out infinite alternate;
+    border-radius: 8px;
+    padding: 0 4px;
+    margin: 3px 4px;
 }
 
-@keyframes pulse-glow {
+@keyframes aura-alert {
     from {
         color: @urgent;
-        text-shadow: 0 0 2px @urgent;
+        box-shadow: 0 0 0 0 alpha(@urgent, 0.5);
+        background-color: alpha(@urgent, 0.15);
     }
+
     to {
         color: @text;
-        text-shadow: 0 0 10px @urgent;
+        box-shadow: 0 0 10px 4px alpha(@urgent, 0.0);
+        background-color: transparent;
     }
 }
 
