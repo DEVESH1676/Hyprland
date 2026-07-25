@@ -1,3 +1,5 @@
+@import url("../../.cache/wal/colors-waybar.css");
+
 /* colors defined at top for easy configuring */
 @define-color background #2C2A24;
 @define-color second-background #3A372F;
@@ -42,27 +44,27 @@ window#waybar.empty #window {
 
 /* configuring the modules */
 .modules-left {
-    margin: 10px 0 0 10px;
-    padding: 0 7px 0 7px;
+    margin: 4px 0 0 6px;
+    padding: 2px 8px 2px 8px;
     background-color: @background;
     border: 2px solid @focused3;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .modules-center {
-    margin: 10px 0 0 0;
-    padding: 0 10px 0 10px;
+    margin: 4px 0 0 0;
+    padding: 2px 12px 2px 12px;
     background-color: @background;
     border: 2px solid @focused3;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .modules-right {
-    margin: 10px 10px 0 0;
-    padding: 0 10px 0 10px;
+    margin: 4px 6px 0 0;
+    padding: 2px 10px 2px 10px;
     background-color: @background;
     border: 2px solid @focused3;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 
@@ -85,34 +87,38 @@ button {
 }
 
 #custom-arch:hover {
-    color: @color1;
+    color: @color4;
 }
 
 #custom-powerprofile:hover {
-    color: @color1
+    color: @color4;
 }
 
 #custom-themeswitcher:hover {
-    color: @color1;
+    color: @color4;
 }
 
 /* workspace pannel */
 #workspaces button {
-    padding: 0 5px;
+    padding: 0 6px;
+    margin: 0 1px;
     background-color: transparent;
     color: @text;
     border-radius: 4px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 #workspaces button:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    color: @color6;
+    background-color: alpha(@color4, 0.30);
 }
 
 #workspaces button.active {
-    color: @focused2;
-    background-color: rgba(255, 255, 255, 0.12);
+    color: @background;
+    background-color: @color4;
     font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.urgent {
@@ -151,8 +157,16 @@ button {
 #custom-clipboard,
 #custom-bluetooth,
 #network,
-#custom-cava {
+#idle_inhibitor,
+#custom-swaync,
+#backlight,
+#wireplumber,
+#custom-volume,
+#custom-arch,
+#custom-powerprofile,
+#custom-themeswitcher {
     padding: 0 8px;
+    transition: all 0.25s ease-in-out;
 }
 
 #clock:hover,
@@ -165,8 +179,11 @@ button {
 #custom-swaync:hover,
 #backlight:hover,
 #wireplumber:hover,
-#custom-volume:hover {
-    color: @color1;
+#custom-volume:hover,
+#custom-arch:hover,
+#custom-powerprofile:hover,
+#custom-themeswitcher:hover {
+    color: @color4;
 }
 
 #idle_inhibitor {
@@ -204,13 +221,17 @@ button {
 #battery.critical:not(.charging) {
     color: @urgent;
     background-color: transparent;
-    animation: blink 0.5s steps(12) infinite alternate;
+    animation: pulse-glow 1s ease-in-out infinite alternate;
 }
 
-@keyframes blink {
+@keyframes pulse-glow {
+    from {
+        color: @urgent;
+        text-shadow: 0 0 2px @urgent;
+    }
     to {
-        background-color: @second-background;
         color: @text;
+        text-shadow: 0 0 10px @urgent;
     }
 }
 

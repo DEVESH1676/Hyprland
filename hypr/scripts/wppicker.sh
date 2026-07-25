@@ -75,9 +75,12 @@ if command -v wal &> /dev/null; then
   fi
 fi
 
-# Matugen for app/UI colors
+# Matugen for app/UI colors (Rofi, Kitty, Hyprland, GTK)
 if command -v matugen &> /dev/null; then
   matugen image "$SELECTED_PATH" -m dark --source-color-index 0 > /dev/null 2>&1
+  # Reload UI components to apply new wallpaper colors instantly
+  pkill -SIGUSR2 waybar 2>/dev/null || true
+  swaync-client -rs 2>/dev/null || true
 fi
 
 # === UPDATE HYPRLOCK WALLPAPER ===

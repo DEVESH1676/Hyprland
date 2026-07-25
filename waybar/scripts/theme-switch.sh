@@ -91,6 +91,10 @@ apply_theme() {
     matugen image "$wallpaper_path" -m dark --source-color-index 0 > /dev/null 2>&1
   fi
 
+  # Reload UI components to apply new wallpaper colors instantly
+  pkill -SIGUSR2 waybar 2>/dev/null || true
+  swaync-client -rs 2>/dev/null || true
+
   notify-send "Theme Switcher" "Applied: $wallpaper_name"
 }
 
