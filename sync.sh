@@ -6,7 +6,7 @@
 set -e
 
 REPO_DIR="$HOME/Hyprland"
-CONFIGS=(hypr waybar wlogout rofi kitty swaync swayosd cava fastfetch matugen wal wireplumber pipewire)
+CONFIGS=(hypr waybar wlogout rofi kitty swaync swayosd cava fastfetch matugen wal wireplumber pipewire gtk-3.0 gtk-4.0 btop Kvantum fontconfig)
 
 cd "$REPO_DIR"
 
