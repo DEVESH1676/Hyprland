@@ -1,46 +1,46 @@
 * {
-    primary: #9ccbfb;
-    primary-fixed: #cfe5ff;
-    primary-fixed-dim: #9ccbfb;
-    on-primary: #003354;
-    on-primary-fixed: #001d33;
-    on-primary-fixed-variant: #114a73;
-    primary-container: #114a73;
-    on-primary-container: #cfe5ff;
+    primary: #b3c5ff;
+    primary-fixed: #dbe1ff;
+    primary-fixed-dim: #b3c5ff;
+    on-primary: #192e60;
+    on-primary-fixed: #001849;
+    on-primary-fixed-variant: #314578;
+    primary-container: #314578;
+    on-primary-container: #dbe1ff;
 
-    secondary: #b9c8da;
-    secondary-fixed: #d5e4f7;
-    secondary-fixed-dim: #b9c8da;
-    on-secondary: #243240;
-    on-secondary-fixed: #0e1d2a;
-    on-secondary-fixed-variant: #3a4857;
-    secondary-container: #3a4857;
-    on-secondary-container: #d5e4f7;
+    secondary: #c1c6dd;
+    secondary-fixed: #dde2f9;
+    secondary-fixed-dim: #c1c6dd;
+    on-secondary: #2a3042;
+    on-secondary-fixed: #151b2c;
+    on-secondary-fixed-variant: #414659;
+    secondary-container: #414659;
+    on-secondary-container: #dde2f9;
 
-    tertiary: #d4bee6;
-    tertiary-fixed: #efdbff;
-    tertiary-fixed-dim: #d4bee6;
-    on-tertiary: #392a49;
-    on-tertiary-fixed: #231533;
-    on-tertiary-fixed-variant: #504061;
-    tertiary-container: #504061;
-    on-tertiary-container: #efdbff;
+    tertiary: #e1bbdc;
+    tertiary-fixed: #ffd6f9;
+    tertiary-fixed-dim: #e1bbdc;
+    on-tertiary: #422741;
+    on-tertiary-fixed: #2b122b;
+    on-tertiary-fixed-variant: #5a3d58;
+    tertiary-container: #5a3d58;
+    on-tertiary-container: #ffd6f9;
 
     error: #ffb4ab;
     on-error: #690005;
     error-container: #93000a;
     on-error-container: #ffdad6;
 
-    surface: #101418;
-    on-surface: #e0e2e8;
-    on-surface-variant: #c2c7cf;
-    outline: #8c9199;
-    outline-variant: #42474e;
+    surface: #121318;
+    on-surface: #e3e2e9;
+    on-surface-variant: #c5c6d0;
+    outline: #8f909a;
+    outline-variant: #45464f;
 
-    brdr: #8c9199;
-    background: #101418;
-    foreground: #e0e2e8;
-    selected: #9ccbfb;
-    active: #d4bee6;
+    brdr: #8f909a;
+    background: #121318;
+    foreground: #e3e2e9;
+    selected: #b3c5ff;
+    active: #e1bbdc;
     urgent: #ffb4ab;
 }

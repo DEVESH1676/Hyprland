@@ -207,7 +207,8 @@
             ]
         },
         "clock": {
-            "format": "{:%I:%M %p}", // Added %p for AM/PM to clarify time
+           "interval": 1,
+            "format": "{:%I:%M:%S %p}", // Added %p for AM/PM to clarify time
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>", // Removed <small> for better readability
             "calendar": {
                 "mode": "month", // Default to month view
