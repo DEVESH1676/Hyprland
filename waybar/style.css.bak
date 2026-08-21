@@ -1,0 +1,264 @@
+@import url("../../.cache/wal/colors-waybar.css");
+
+/* colors defined at top for easy configuring */
+@define-color background #2C2A24;
+@define-color second-background #3A372F;
+@define-color text #DDD5C4;
+@define-color borders #A0907A;
+@define-color focused #D08B57;
+@define-color focused2 #BFAA80;
+@define-color focused3 #a53cab;
+@define-color color1 #7699A3;
+@define-color color2 #8D7AAE;
+@define-color color3 #78997A;
+@define-color urgent #B05A5A;
+
+
+/* font declared */
+* {
+    font-family: "Iosevka Nerd Font";
+    font-size: 15px;
+}
+
+#custom-openbracket,
+#custom-closebracket {
+    margin: 0 5px;
+}
+
+/* idk what all this does */
+window#waybar {
+    background-color: transparent;
+    border-bottom: 0;
+    color: @text;
+    transition: background-color 0.5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+
+/* configuring the modules */
+.modules-left {
+    margin: 3px 0 0 5px;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
+    border: 2px solid @focused3;
+    border-radius: 8px;
+}
+
+.modules-center {
+    margin: 3px 0 0 0;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
+    border: 2px solid @focused3;
+    border-radius: 8px;
+}
+
+.modules-right {
+    margin: 3px 5px 0 0;
+    padding: 2px 8px;
+    min-height: 26px;
+    background-color: alpha(@background, 0.7);
+    border: 2px solid @focused3;
+    border-radius: 8px;
+}
+
+
+/* whats this?? */
+button {
+    border: none;
+}
+
+
+/* left island */
+
+/* menu pannel */
+#custom-arch {
+    padding: 0 8px 0 4px;
+    font-size: 18px;
+    border-radius: 8px;
+    margin-top: 2px;
+    transition: all 0.25s ease-in-out;
+}
+
+#custom-powerprofile,
+#custom-themeswitcher {
+    padding: 0 6px;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+#custom-arch:hover {
+    color: @color4;
+}
+
+#custom-powerprofile:hover {
+    color: @color4;
+}
+
+#custom-themeswitcher:hover {
+    color: @color4;
+}
+
+/* workspace pannel */
+#workspaces button {
+    padding: 0 4px;
+    margin: 4px 2px;
+    min-height: 20px;
+    background-color: transparent;
+    color: @text;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    color: @color6;
+    background-color: alpha(@color4, 0.30);
+}
+
+#workspaces button.active {
+    color: @background;
+    background-color: @color4;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.urgent {
+    color: @urgent;
+    background-color: rgba(176, 90, 90, 0.2);
+}
+
+/* media player */
+#mpris,
+#custom-mpris-marquee {
+    margin: 0 0 0 5px;
+    padding: 0 8px;
+    background-color: transparent;
+    color: @text;
+}
+
+#custom-mpris-marquee.stopped {
+    padding: 0;
+    margin: 0;
+}
+
+#mpris.playing,
+#custom-mpris-marquee.playing {
+    font-weight: bold;
+    color: @color3;
+}
+
+/* center module  */
+#window,
+#custom-appname {
+    padding: 0 5px;
+}
+
+/* Right Island */
+
+/* module general styles */
+#clock,
+#battery,
+#cpu,
+#memory,
+#custom-clipboard,
+#custom-bluetooth,
+#network,
+#idle_inhibitor,
+#custom-swaync,
+#backlight,
+#wireplumber,
+#custom-volume,
+#custom-powerprofile,
+#custom-themeswitcher {
+    padding: 0 8px;
+    transition: all 0.25s ease-in-out;
+}
+
+#clock:hover,
+#battery:hover,
+#custom-cpu:hover,
+#custom-clipboard:hover,
+#custom-bluetooth:hover,
+#network:hover,
+#idle_inhibitor:hover,
+#custom-swaync:hover,
+#backlight:hover,
+#wireplumber:hover,
+#custom-volume:hover,
+#custom-powerprofile:hover,
+#custom-themeswitcher:hover {
+    color: @color4;
+}
+
+#idle_inhibitor {
+    padding: 0 8px;
+}
+
+#custom-powerprofile {
+    padding: 0 8px 0 4px;
+}
+
+/* Remaining Modules */
+#backlight,
+#wireplumber,
+#custom-volume {
+    padding: 0 8px;
+}
+
+#wireplumber.muted,
+#custom-volume.muted {
+    color: @urgent;
+    background-color: transparent;
+}
+
+#custom-swaync {
+    padding: 0 8px;
+    color: @text;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @color3;
+    background-color: transparent;
+}
+
+#battery.critical:not(.charging),
+#cpu.critical,
+#memory.critical {
+    color: @urgent;
+    background-color: transparent;
+    animation: aura-alert 1s ease-in-out infinite alternate;
+    border-radius: 8px;
+    padding: 0 4px;
+    margin: 3px 4px;
+}
+
+@keyframes aura-alert {
+    from {
+        color: @urgent;
+        box-shadow: 0 0 0 0 alpha(@urgent, 0.5);
+        background-color: alpha(@urgent, 0.15);
+    }
+
+    to {
+        color: @text;
+        box-shadow: 0 0 10px 4px alpha(@urgent, 0.0);
+        background-color: transparent;
+    }
+}
+
+
+
+
+#tray {
+    padding: 0 10px;
+}
