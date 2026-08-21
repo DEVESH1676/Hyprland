@@ -207,7 +207,7 @@
             ]
         },
         "clock": {
-           "interval": 1,
+            "interval": 1,
             "format": "{:%I:%M:%S %p}", // Added %p for AM/PM to clarify time
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>", // Removed <small> for better readability
             "calendar": {
@@ -323,7 +323,8 @@
         },
         "tray": {
             "icon-size": 18,
-            "spacing": 10
+            "spacing": 10,
+            "show-passive-items": true
         },
         "custom/notifications": {
             "format": "",
