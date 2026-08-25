@@ -28,10 +28,82 @@
   --font-size-summary:  14px;
 }
 
+/* =====================================================================
+   ANIMATIONS
+   ===================================================================== */
+
+@keyframes btn-pulse {
+  0%   { box-shadow: 0 0 0 0 alpha(@color4, 0.5); }
+  70%  { box-shadow: 0 0 0 8px alpha(@color4, 0); }
+  100% { box-shadow: 0 0 0 0 alpha(@color4, 0); }
+}
+
+@keyframes glow-breathe {
+  0%   { box-shadow: 0 2px 10px alpha(@color4, 0.3); }
+  50%  { box-shadow: 0 2px 18px alpha(@color4, 0.55); }
+  100% { box-shadow: 0 2px 10px alpha(@color4, 0.3); }
+}
+
+@keyframes critical-pulse {
+  0%   { box-shadow: 0 6px 28px alpha(@color5, 0.3), inset 3px 0 16px -4px alpha(@color5, 0.15); }
+  50%  { box-shadow: 0 6px 32px alpha(@color5, 0.5), inset 3px 0 20px -4px alpha(@color5, 0.3); }
+  100% { box-shadow: 0 6px 28px alpha(@color5, 0.3), inset 3px 0 16px -4px alpha(@color5, 0.15); }
+}
+
+@keyframes slide-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 * {
   font-family: "JetBrains Mono Nerd Font", "JetBrainsMono NF", sans-serif;
   font-weight: 500;
-  transition: all 150ms ease;
+  transition: all 200ms ease;
+}
+
+/* =====================================================================
+   SCROLLBAR — fully transparent / invisible to match system
+   ===================================================================== */
+
+scrollbar,
+.control-center scrollbar {
+  background: transparent;
+  border: none;
+  min-width: 4px;
+}
+
+scrollbar slider,
+.control-center scrollbar slider {
+  background: alpha(@foreground, 0.0);
+  border-radius: 20px;
+  min-width: 4px;
+  min-height: 30px;
+  border: none;
+}
+
+scrollbar:hover slider,
+.control-center scrollbar:hover slider {
+  background: alpha(@foreground, 0.12);
+}
+
+scrollbar slider:hover,
+.control-center scrollbar slider:hover {
+  background: alpha(@foreground, 0.2);
+}
+
+scrollbar slider:active,
+.control-center scrollbar slider:active {
+  background: alpha(@foreground, 0.25);
+}
+
+scrollbar.overlay-indicator,
+scrollbar.overlay-indicator:hover {
+  background: transparent;
+}
+
+scrollbar trough {
+  background: transparent;
+  border: none;
 }
 
 /* =====================================================================
@@ -65,6 +137,7 @@
   border: none;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
   padding: 0;
+  animation: slide-in 300ms ease forwards;
 }
 
 /* Hover glow on notification cards */
@@ -100,11 +173,12 @@
 
 /* ------------------------------------------------------------------
    URGENCY: CRITICAL — uses color5/color13 (Magenta #cf1dd6)
+   Animated pulsing glow
    ------------------------------------------------------------------ */
 .notification-row .notification-background .notification.critical {
   background: alpha(@color1, 0.55);
   border-left: 3px solid @color5;
-  box-shadow: 0 6px 28px alpha(@color5, 0.35), inset 3px 0 16px -4px alpha(@color5, 0.2);
+  animation: critical-pulse 2.5s ease-in-out infinite;
 }
 
 .notification-row .notification-background .notification.critical .notification-content .text-box .summary {
@@ -327,6 +401,7 @@
 
 .widget-dnd switch:checked {
   background: @color4;
+  animation: glow-breathe 2s ease-in-out infinite;
 }
 
 .widget-dnd switch slider {
@@ -338,15 +413,19 @@
 }
 
 /* =====================================================================
-   WIDGET: BUTTONS GRID (Quick Toggles)
-   Symmetric 2-column × 3-row tile grid
+   WIDGET: BUTTONS GRID (Icon-Only Quick Toggles)
+   Symmetric 4-column grid, uniform square tiles, centered icons
    ===================================================================== */
 
 .widget-buttons-grid {
-  padding: 2px;
+  padding: 4px;
   margin: 4px;
   background: transparent;
   border: none;
+}
+
+.widget-buttons-grid flowbox {
+  /* Force 4 columns for 8 icons → 4×2 grid */
 }
 
 .widget-buttons-grid flowboxchild {
@@ -355,30 +434,38 @@
 }
 
 .widget-buttons-grid flowboxchild > button {
-  /* Equal-size tiles, no visible border rings */
-  min-width: 158px;
-  min-height: 42px;
+  /* Uniform square tiles — icon only */
+  min-width: 72px;
+  min-height: 72px;
   background: alpha(@foreground, 0.06);
   border: none;
-  border-radius: 14px;
-  color: @foreground;
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 8px 10px;
+  border-radius: 16px;
+  color: alpha(@foreground, 0.8);
+  font-size: 24px;
+  padding: 0;
   box-shadow: none;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Hover — lift + glow pulse using wallpaper palette */
 .widget-buttons-grid flowboxchild > button:hover {
-  background: alpha(@color4, 0.25);
+  background: alpha(@color4, 0.2);
   color: @color6;
+  box-shadow: 0 4px 14px alpha(@color4, 0.25);
+  animation: btn-pulse 0.6s ease;
 }
 
-/* Active/checked toggle state — uses wallpaper accent color */
+/* Active press */
+.widget-buttons-grid flowboxchild > button:active {
+  background: alpha(@color4, 0.35);
+  transition: all 60ms ease;
+}
+
+/* Checked toggle — wallpaper accent with breathing glow */
 .widget-buttons-grid flowboxchild > button.toggle:checked {
   background: @color4;
   color: #ffffff;
-  font-weight: 700;
-  box-shadow: 0 2px 12px alpha(@color4, 0.4);
+  animation: glow-breathe 2.5s ease-in-out infinite;
 }
 
 /* =====================================================================
@@ -433,10 +520,10 @@
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
   background: alpha(@color4, 0.35);
   color: @color6;
+  box-shadow: 0 0 10px alpha(@color4, 0.3);
 }
 
 .widget-mpris > box > button {
-  /* Side arrows (next/prev player) */
   border: none;
   background: transparent;
   color: alpha(@foreground, 0.5);
@@ -451,15 +538,35 @@
 }
 
 /* =====================================================================
-   WIDGET: VOLUME
+   WIDGET: VOLUME — with icon label
    ===================================================================== */
 
 .widget-volume {
   background: alpha(@foreground, 0.05);
   border: none;
   border-radius: 14px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   margin: 4px;
+  color: @foreground;
+  font-size: 14px;
+}
+
+.widget-volume > label {
+  font-size: 16px;
+  color: @color6;
+  margin-right: 8px;
+}
+
+.widget-volume > box > button {
+  background: transparent;
+  border: none;
+  color: @color6;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.widget-volume > box > button:hover {
+  background: alpha(@color4, 0.25);
   color: @foreground;
 }
 
@@ -475,15 +582,35 @@
 }
 
 /* =====================================================================
-   WIDGET: BACKLIGHT (Brightness)
+   WIDGET: BACKLIGHT (Brightness) — matching volume styling
    ===================================================================== */
 
 .widget-backlight {
   background: alpha(@foreground, 0.05);
   border: none;
   border-radius: 14px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   margin: 4px;
+  color: @foreground;
+  font-size: 14px;
+}
+
+.widget-backlight > label {
+  font-size: 16px;
+  color: @color5;
+  margin-right: 8px;
+}
+
+.widget-backlight > box > button {
+  background: transparent;
+  border: none;
+  color: @color5;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.widget-backlight > box > button:hover {
+  background: alpha(@color5, 0.25);
   color: @foreground;
 }
 
@@ -504,6 +631,11 @@ scale trough highlight {
   border: none;
 }
 
+/* Brightness slider uses magenta highlight to distinguish from volume */
+.widget-backlight scale trough highlight {
+  background: @color5;
+}
+
 scale slider {
   background: @color6;
   border-radius: 50%;
@@ -515,7 +647,16 @@ scale slider {
 
 scale slider:hover {
   background: #ffffff;
-  box-shadow: 0 0 8px alpha(@color6, 0.5);
+  box-shadow: 0 0 10px alpha(@color6, 0.5);
+}
+
+.widget-backlight scale slider {
+  background: @color5;
+}
+
+.widget-backlight scale slider:hover {
+  background: #ffffff;
+  box-shadow: 0 0 10px alpha(@color5, 0.5);
 }
 
 /* Progress bars inside notifications */

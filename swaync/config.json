@@ -50,34 +50,54 @@
     "buttons-grid": {
       "actions": [
         {
-          "label": "󰤨  Wi-Fi",
+          "label": "󰤨",
           "type": "toggle",
           "active": true,
+          "tooltip": "Wi-Fi",
           "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
           "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
         },
         {
-          "label": "󰂯  Bluetooth",
+          "label": "󰂯",
           "type": "toggle",
+          "tooltip": "Bluetooth",
           "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off'",
           "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
         },
         {
-          "label": "󰝟  Mute",
+          "label": "󰖩",
           "type": "toggle",
+          "tooltip": "Airplane Mode",
+          "command": "bash ~/.config/hypr/scripts/AirplaneMode.sh",
+          "update-command": "sh -c 'rfkill list wifi | grep -q \"Soft blocked: yes\" && echo true || echo false'"
+        },
+        {
+          "label": "󰝟",
+          "type": "toggle",
+          "tooltip": "Mute Audio",
           "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && pactl set-sink-mute @DEFAULT_SINK@ 1 || pactl set-sink-mute @DEFAULT_SINK@ 0'",
           "update-command": "sh -c '[[ $(pactl get-sink-mute @DEFAULT_SINK@) == \"Mute: yes\" ]] && echo true || echo false'"
         },
         {
-          "label": "󰛳  Share",
-          "command": "/home/devesh/.local/bin/rquickshare"
+          "label": "󰛨",
+          "type": "toggle",
+          "tooltip": "Night Light",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && hyprsunset -t 4000 & || killall hyprsunset'",
+          "update-command": "sh -c 'pgrep -x hyprsunset > /dev/null && echo true || echo false'"
         },
         {
-          "label": "󰌾  Lock",
+          "label": "󰹑",
+          "tooltip": "Screenshot",
+          "command": "bash ~/.config/hypr/scripts/screenshot.sh"
+        },
+        {
+          "label": "󰌾",
+          "tooltip": "Lock Screen",
           "command": "hyprlock"
         },
         {
-          "label": "󰐥  Power",
+          "label": "󰐥",
+          "tooltip": "Power Off",
           "command": "systemctl poweroff"
         }
       ]
