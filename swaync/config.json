@@ -65,7 +65,7 @@
           "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
         },
         {
-          "label": "󰖩",
+          "label": "󰀝",
           "type": "toggle",
           "tooltip": "Airplane Mode",
           "command": "bash ~/.config/hypr/scripts/AirplaneMode.sh",

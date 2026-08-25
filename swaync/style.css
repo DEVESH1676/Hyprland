@@ -2,20 +2,18 @@
 @import "../../.cache/wal/colors-waybar.css";
 
 /* =====================================================================
-   SwayNC — Clean Glassmorphic Theme
-   All colors pulled from pywal wallpaper palette.
-   No hardcoded colors. No thick borders. No cheap rings.
+   SwayNC — Glassmorphic Theme
+   All colors from pywal. Transparent to match Hyprland blur.
    ===================================================================== */
 
-/* Override the system CSS variables using pywal palette */
 :root {
-  --cc-bg:              alpha(@background, 0.82);
+  --cc-bg:              alpha(@background, 0.55);
   --noti-border-color:  transparent;
   --noti-bg:            48, 48, 48;
   --noti-bg-alpha:      0;
-  --noti-bg-darker:     alpha(@background, 0.95);
-  --noti-bg-hover:      alpha(@color8, 0.6);
-  --noti-bg-focus:      alpha(@color8, 0.3);
+  --noti-bg-darker:     alpha(@background, 0.7);
+  --noti-bg-hover:      alpha(@color8, 0.4);
+  --noti-bg-focus:      alpha(@color8, 0.2);
   --noti-close-bg:      alpha(@foreground, 0.1);
   --noti-close-bg-hover: alpha(@foreground, 0.2);
   --text-color:         @foreground;
@@ -23,7 +21,7 @@
   --bg-selected:        @color4;
   --border:             none;
   --border-radius:      16px;
-  --notification-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --notification-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   --font-size-body:     13px;
   --font-size-summary:  14px;
 }
@@ -33,7 +31,7 @@
    ===================================================================== */
 
 @keyframes btn-pulse {
-  0%   { box-shadow: 0 0 0 0 alpha(@color4, 0.5); }
+  0%   { box-shadow: 0 0 0 0 alpha(@color4, 0.45); }
   70%  { box-shadow: 0 0 0 8px alpha(@color4, 0); }
   100% { box-shadow: 0 0 0 0 alpha(@color4, 0); }
 }
@@ -62,7 +60,7 @@
 }
 
 /* =====================================================================
-   SCROLLBAR — fully transparent / invisible to match system
+   SCROLLBAR — invisible, ghost on hover
    ===================================================================== */
 
 scrollbar,
@@ -86,13 +84,11 @@ scrollbar:hover slider,
   background: alpha(@foreground, 0.12);
 }
 
-scrollbar slider:hover,
-.control-center scrollbar slider:hover {
+scrollbar slider:hover {
   background: alpha(@foreground, 0.2);
 }
 
-scrollbar slider:active,
-.control-center scrollbar slider:active {
+scrollbar slider:active {
   background: alpha(@foreground, 0.25);
 }
 
@@ -119,7 +115,7 @@ scrollbar trough {
 }
 
 /* =====================================================================
-   NOTIFICATION CARD (shared base — floating popups + control center)
+   NOTIFICATION CARDS
    ===================================================================== */
 
 .notification-row {
@@ -128,55 +124,47 @@ scrollbar trough {
 }
 
 .notification-row .notification-background {
-  padding: 4px 10px;
+  padding: 4px 8px;
 }
 
 .notification-row .notification-background .notification {
-  background: alpha(@background, 0.88);
+  background: alpha(@background, 0.65);
   border-radius: 16px;
   border: none;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   padding: 0;
   animation: slide-in 300ms ease forwards;
 }
 
-/* Hover glow on notification cards */
 .notification-row .notification-background .notification:hover {
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 0 1px alpha(@color8, 0.4);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px alpha(@color8, 0.3);
 }
 
-/* ------------------------------------------------------------------
-   URGENCY: LOW — uses color6/color14 (Cyan #1bc9eb)
-   ------------------------------------------------------------------ */
+/* URGENCY: LOW — Cyan */
 .notification-row .notification-background .notification.low {
-  background: alpha(@background, 0.85);
+  background: alpha(@background, 0.6);
   border-left: 3px solid @color6;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), inset 3px 0 12px -4px alpha(@color6, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 3px 0 12px -4px alpha(@color6, 0.15);
 }
 
 .notification-row .notification-background .notification.low .notification-content .text-box .summary {
   color: @color6;
 }
 
-/* ------------------------------------------------------------------
-   URGENCY: NORMAL — uses color4/color12 (Blue #2d54cd)
-   ------------------------------------------------------------------ */
+/* URGENCY: NORMAL — Blue */
 .notification-row .notification-background .notification.normal {
-  background: alpha(@background, 0.88);
+  background: alpha(@background, 0.65);
   border-left: 3px solid @color4;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), inset 3px 0 12px -4px alpha(@color4, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 3px 0 12px -4px alpha(@color4, 0.15);
 }
 
 .notification-row .notification-background .notification.normal .notification-content .text-box .summary {
   color: @color14;
 }
 
-/* ------------------------------------------------------------------
-   URGENCY: CRITICAL — uses color5/color13 (Magenta #cf1dd6)
-   Animated pulsing glow
-   ------------------------------------------------------------------ */
+/* URGENCY: CRITICAL — Magenta pulsing glow */
 .notification-row .notification-background .notification.critical {
-  background: alpha(@color1, 0.55);
+  background: alpha(@color1, 0.5);
   border-left: 3px solid @color5;
   animation: critical-pulse 2.5s ease-in-out infinite;
 }
@@ -196,8 +184,8 @@ scrollbar trough {
   color: alpha(@foreground, 0.5);
   border: none;
   border-radius: 100%;
-  margin-top: 8px;
-  margin-right: 8px;
+  margin-top: 10px;
+  margin-right: 10px;
   min-width: 24px;
   min-height: 24px;
   padding: 0;
@@ -212,7 +200,7 @@ scrollbar trough {
   border: none;
 }
 
-/* Default action (clickable body area) */
+/* Default action */
 .notification-row .notification-background .notification .notification-default-action {
   border-radius: 16px;
   margin: 0;
@@ -223,16 +211,16 @@ scrollbar trough {
 }
 
 .notification-row .notification-background .notification .notification-default-action:hover {
-  background: alpha(@color8, 0.35);
+  background: alpha(@color8, 0.25);
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content {
   background: transparent;
-  padding: 8px;
+  padding: 10px 12px;
   border-radius: 16px;
 }
 
-/* Text styling */
+/* Text */
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
   font-size: 14px;
   font-weight: 700;
@@ -276,7 +264,7 @@ scrollbar trough {
 }
 
 .notification-row .notification-background .notification .notification-action > button:hover {
-  background: alpha(@color4, 0.35);
+  background: alpha(@color4, 0.3);
 }
 
 /* =====================================================================
@@ -309,19 +297,19 @@ scrollbar trough {
 
 .notification-group-collapse-button:hover,
 .notification-group-close-all-button:hover {
-  background: alpha(@color8, 0.5);
+  background: alpha(@color8, 0.4);
 }
 
 /* =====================================================================
-   CONTROL CENTER
+   CONTROL CENTER — transparent glass to match Hyprland blur
    ===================================================================== */
 
 .control-center {
-  background: alpha(@background, 0.82);
+  background: alpha(@background, 0.55);
   border: none;
   border-radius: 22px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
-  padding: 14px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  padding: 18px;
   margin: 12px;
   color: @foreground;
 }
@@ -335,7 +323,7 @@ scrollbar trough {
 }
 
 .control-center .control-center-list .notification {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* =====================================================================
@@ -343,7 +331,7 @@ scrollbar trough {
    ===================================================================== */
 
 .widget-title {
-  margin: 4px 4px 10px 4px;
+  margin: 6px 8px 14px 8px;
   padding: 0;
 }
 
@@ -378,8 +366,8 @@ scrollbar trough {
   background: alpha(@foreground, 0.05);
   border: none;
   border-radius: 14px;
-  padding: 8px 14px;
-  margin: 4px 4px 8px 4px;
+  padding: 10px 16px;
+  margin: 6px 8px;
 }
 
 .widget-dnd label {
@@ -413,55 +401,60 @@ scrollbar trough {
 }
 
 /* =====================================================================
-   WIDGET: BUTTONS GRID (Icon-Only Quick Toggles)
-   Symmetric 4-column grid, uniform square tiles, centered icons
+   WIDGET: BUTTONS GRID — Icon-Only, 4×2, Centered
    ===================================================================== */
 
 .widget-buttons-grid {
-  padding: 4px;
-  margin: 4px;
+  padding: 6px 4px;
+  margin: 6px 8px;
   background: transparent;
   border: none;
 }
 
-.widget-buttons-grid flowbox {
-  /* Force 4 columns for 8 icons → 4×2 grid */
-}
-
 .widget-buttons-grid flowboxchild {
-  padding: 3px;
+  padding: 4px;
   margin: 0;
 }
 
 .widget-buttons-grid flowboxchild > button {
-  /* Uniform square tiles — icon only */
-  min-width: 72px;
-  min-height: 72px;
+  /* Uniform square icon tiles */
+  min-width: 70px;
+  min-height: 56px;
   background: alpha(@foreground, 0.06);
   border: none;
-  border-radius: 16px;
-  color: alpha(@foreground, 0.8);
-  font-size: 24px;
+  border-radius: 14px;
+  color: alpha(@foreground, 0.75);
+  font-size: 22px;
+  font-weight: 400;
   padding: 0;
+  margin: 0;
   box-shadow: none;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Center icon in tile */
+  -gtk-icon-style: symbolic;
 }
 
-/* Hover — lift + glow pulse using wallpaper palette */
+.widget-buttons-grid flowboxchild > button label {
+  /* Ensure text/icon label is centered */
+  margin: 0;
+  padding: 0;
+}
+
+/* Hover — pulse + color */
 .widget-buttons-grid flowboxchild > button:hover {
   background: alpha(@color4, 0.2);
   color: @color6;
-  box-shadow: 0 4px 14px alpha(@color4, 0.25);
+  box-shadow: 0 4px 14px alpha(@color4, 0.2);
   animation: btn-pulse 0.6s ease;
 }
 
-/* Active press */
+/* Press */
 .widget-buttons-grid flowboxchild > button:active {
   background: alpha(@color4, 0.35);
   transition: all 60ms ease;
 }
 
-/* Checked toggle — wallpaper accent with breathing glow */
+/* Toggle ON — wallpaper accent glow */
 .widget-buttons-grid flowboxchild > button.toggle:checked {
   background: @color4;
   color: #ffffff;
@@ -474,7 +467,7 @@ scrollbar trough {
 
 .widget-mpris {
   padding: 0;
-  margin: 4px;
+  margin: 6px 8px;
   border: none;
   background: transparent;
 }
@@ -483,12 +476,12 @@ scrollbar trough {
   margin: 4px;
   border-radius: 16px;
   background: alpha(@foreground, 0.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay {
   padding: 14px;
-  background-color: alpha(@background, 0.55);
+  background-color: alpha(@background, 0.45);
   border-radius: 16px;
 }
 
@@ -518,7 +511,7 @@ scrollbar trough {
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
-  background: alpha(@color4, 0.35);
+  background: alpha(@color4, 0.3);
   color: @color6;
   box-shadow: 0 0 10px alpha(@color4, 0.3);
 }
@@ -538,15 +531,15 @@ scrollbar trough {
 }
 
 /* =====================================================================
-   WIDGET: VOLUME — with icon label
+   WIDGET: VOLUME
    ===================================================================== */
 
 .widget-volume {
   background: alpha(@foreground, 0.05);
   border: none;
   border-radius: 14px;
-  padding: 8px 14px;
-  margin: 4px;
+  padding: 10px 16px;
+  margin: 6px 8px;
   color: @foreground;
   font-size: 14px;
 }
@@ -566,7 +559,7 @@ scrollbar trough {
 }
 
 .widget-volume > box > button:hover {
-  background: alpha(@color4, 0.25);
+  background: alpha(@color4, 0.2);
   color: @foreground;
 }
 
@@ -575,22 +568,22 @@ scrollbar trough {
 }
 
 .per-app-volume {
-  background: alpha(@background, 0.4);
+  background: alpha(@background, 0.3);
   margin: 6px;
   margin-bottom: 0;
   border-radius: 12px;
 }
 
 /* =====================================================================
-   WIDGET: BACKLIGHT (Brightness) — matching volume styling
+   WIDGET: BACKLIGHT (Brightness)
    ===================================================================== */
 
 .widget-backlight {
   background: alpha(@foreground, 0.05);
   border: none;
   border-radius: 14px;
-  padding: 8px 14px;
-  margin: 4px;
+  padding: 10px 16px;
+  margin: 6px 8px;
   color: @foreground;
   font-size: 14px;
 }
@@ -610,12 +603,12 @@ scrollbar trough {
 }
 
 .widget-backlight > box > button:hover {
-  background: alpha(@color5, 0.25);
+  background: alpha(@color5, 0.2);
   color: @foreground;
 }
 
 /* =====================================================================
-   SLIDERS (shared for Volume, Backlight, Progress Bars)
+   SLIDERS
    ===================================================================== */
 
 scale trough {
@@ -631,7 +624,6 @@ scale trough highlight {
   border: none;
 }
 
-/* Brightness slider uses magenta highlight to distinguish from volume */
 .widget-backlight scale trough highlight {
   background: @color5;
 }
@@ -659,7 +651,7 @@ scale slider:hover {
   box-shadow: 0 0 10px alpha(@color5, 0.5);
 }
 
-/* Progress bars inside notifications */
+/* Progress bars */
 progressbar trough {
   background: alpha(@foreground, 0.1);
   border-radius: 20px;
