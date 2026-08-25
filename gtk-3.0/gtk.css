@@ -5,3 +5,4 @@
 @define-color accent_color #b3c5ff;
 @define-color accent_bg_color #b3c5ff;
 @define-color accent_fg_color #192e60;
+@import 'colors.css';
